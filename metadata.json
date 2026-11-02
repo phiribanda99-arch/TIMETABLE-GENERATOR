@@ -1,0 +1,6 @@
+{
+  "name": "UniSchedule - University Intelligent Timetable Scheduling System",
+  "description": "Comprehensive university timetable scheduling platform with mathematical constraint optimization, conflict diagnostics, multi-role portals, and interactive schedule views.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

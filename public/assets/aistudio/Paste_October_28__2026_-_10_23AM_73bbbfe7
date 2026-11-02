@@ -1,0 +1,649 @@
+Here is a **professional, comprehensive AI prompt** you can copy and paste into ChatGPT, Claude, Cursor, or another AI coding assistant to build a complete **University Intelligent Timetable Scheduling System**.
+
+This prompt is designed to produce a functional university management system with an intelligent scheduling algorithm, database, modern dashboard, conflict detection, and timetable generation.
+
+## Best Prompt: University Intelligent Timetable Scheduling System
+
+Master Prompt — University Intelligent Timetable Scheduling System
+
+Act as a senior software engineer, AI systems architect, database designer, UI/UX designer, and optimization specialist.
+
+Your task is to design and develop a COMPLETE, INTELLIGENT, PROFESSIONAL, AND FULLY FUNCTIONAL UNIVERSITY TIMETABLE SCHEDULING SYSTEM suitable for a real university.
+
+The system must automatically generate optimized academic timetables while considering lecturers, students, courses, classrooms, laboratories, academic programmes, and university scheduling policies.
+
+Do not build a simple timetable management application. Build a genuine intelligent scheduling system that uses mathematical optimization to generate valid timetables, detect conflicts, and improve scheduling efficiency.
+
+==================================================
+
+1. # TECHNOLOGY STACK
+
+Use the following technologies:
+
+- Backend: Python with Flask.
+- Frontend: HTML5, CSS3, JavaScript, and Bootstrap 5.
+- Database: SQLite for development, with an architecture that can migrate to PostgreSQL.
+- ORM: Flask-SQLAlchemy.
+- Intelligent scheduling: Google OR-Tools CP-SAT solver.
+- Authentication: Flask-Login with secure password hashing.
+- Forms and validation: Flask-WTF and WTForms.
+- Charts: Chart.js.
+- Timetable exports: Excel and PDF.
+- Testing: pytest.
+- Version control: Git.
+
+Use clean, modular, maintainable, and well-documented code.
+
+==================================================
+
+2. # SYSTEM OBJECTIVES
+
+Develop a web-based university timetable scheduling system that can:
+
+1. Automatically generate university timetables.
+2. Prevent lecturer, classroom, and student-group scheduling conflicts.
+3. Allocate courses to appropriate classrooms and laboratories.
+4. Respect lecturer availability and university working hours.
+5. Satisfy course contact-hour requirements.
+6. Optimize room utilization.
+7. Minimize unnecessary gaps between lectures.
+8. Balance lecturer workloads.
+9. Allow administrators to edit and regenerate timetables.
+10. Detect, explain, and resolve scheduling conflicts.
+11. Display timetables using interactive daily and weekly views.
+12. Export timetables into PDF and Excel formats.
+
+The system must distinguish between mandatory constraints and preferences that the optimization algorithm should try to improve.
+
+==================================================
+
+3. # USER AUTHENTICATION AND ACCESS CONTROL
+
+Implement secure authentication with the following roles:
+
+A. SYSTEM ADMINISTRATOR
+
+- Manage users and permissions.
+- Manage faculties and departments.
+- Manage academic programmes and student groups.
+- Manage courses and course assignments.
+- Manage lecturers and their availability.
+- Manage classrooms and laboratories.
+- Configure academic calendars and scheduling rules.
+- Generate, review, publish, and regenerate timetables.
+- View reports and system statistics.
+
+B. LECTURER
+
+- View their personal timetable.
+- View assigned courses and classrooms.
+- View teaching workload.
+- Report scheduling problems.
+- View timetable updates.
+
+C. STUDENT
+
+- View their programme timetable.
+- View their semester courses.
+- View lecture venues and times.
+- Filter timetable information by day and course.
+- Download or print their timetable.
+
+Enforce role-based access control on the server. Hiding a button in the interface must never be the only security measure.
+
+==================================================
+
+4. # UNIVERSITY DATA MANAGEMENT
+
+Create complete CRUD functionality for:
+
+- Faculties.
+- Departments.
+- Academic programmes.
+- Academic years.
+- Semesters.
+- Courses and modules.
+- Lecturers.
+- Students.
+- Student groups and cohorts.
+- Classrooms.
+- Laboratories.
+- Course registrations.
+- Lecturer-course assignments.
+- Course-group assignments.
+- Lecturer availability.
+- Room availability.
+- Academic working days and time slots.
+
+Each course must support:
+
+- Course code.
+- Course title.
+- Department.
+- Academic programme.
+- Semester.
+- Course level or year of study.
+- Number of students.
+- Required weekly lecture hours.
+- Required practical or laboratory hours.
+- Required session duration.
+- Assigned lecturer or lecturers.
+- Assigned student group or groups.
+- Required room type.
+- Scheduling priority.
+
+Each classroom must support:
+
+- Room identifier.
+- Building.
+- Room capacity.
+- Room type.
+- Available teaching equipment.
+- Available days and time slots.
+
+Each lecturer must support:
+
+- Staff identifier.
+- Name.
+- Department.
+- Assigned courses.
+- Maximum teaching workload.
+- Available days and time slots.
+- Unavailable periods.
+
+Validate all records before saving them.
+
+Prevent invalid references, duplicate records where prohibited, and deletion of data that is still required by published timetables.
+
+==================================================
+
+5. # INTELLIGENT TIMETABLE SCHEDULING ENGINE
+
+This is the most important component of the entire system.
+
+Implement the scheduling engine in a dedicated module named scheduler.py using Google OR-Tools CP-SAT.
+
+Do not use random allocation or simple sequential assignment as the primary scheduling method.
+
+The solver must model scheduling decisions as optimization variables and enforce university scheduling constraints.
+
+A. HARD CONSTRAINTS
+
+These constraints must never be violated in a successfully generated timetable:
+
+1. LECTURER CONFLICT PREVENTION A lecturer must not teach two different classes simultaneously.
+2. CLASSROOM CONFLICT PREVENTION A classroom must not be assigned to two simultaneous sessions.
+3. STUDENT GROUP CONFLICT PREVENTION A student group must not have two compulsory classes simultaneously.
+4. ROOM CAPACITY The classroom must accommodate the expected number of students.
+5. ROOM TYPE Laboratory sessions must use appropriate laboratories. Other specialized sessions must use suitable facilities.
+6. LECTURER AVAILABILITY Classes must be scheduled only during a lecturer's available periods.
+7. ROOM AVAILABILITY Classes must be assigned only to available classrooms.
+8. WORKING HOURS Classes must fit within the university's permitted working hours.
+9. COURSE CONTACT HOURS Every course must receive the required number of weekly teaching hours or sessions.
+10. SESSION DURATION Each session must occupy the required number of consecutive time slots.
+11. COURSE ASSIGNMENTS Only appropriately assigned lecturers may teach a course.
+12. FIXED SESSIONS Approved fixed sessions must remain in their designated periods unless an authorized administrator changes them.
+13. GROUP REGISTRATION Prevent conflicts between courses attended by the same student group. Where individual student registrations are available, support conflict checking at the individual student level when required.
+14. RESOURCE AVAILABILITY Do not allocate a room or other exclusive resource outside its available periods.
+15. VALID TIME INTERVALS Sessions must fit entirely within permitted scheduling periods without overlapping breaks or prohibited intervals.
+
+B. SOFT CONSTRAINTS
+
+Optimize these preferences whenever possible:
+
+- Minimize unnecessary gaps in student timetables.
+- Minimize unnecessary gaps in lecturer timetables.
+- Distribute sessions fairly across the working week.
+- Avoid excessive consecutive teaching hours.
+- Balance lecturer workloads.
+- Prefer suitable rooms close to the relevant department when location information is available.
+- Maximize appropriate classroom utilization.
+- Avoid scheduling too many demanding sessions on the same day.
+- Respect preferred teaching times.
+- Minimize unnecessary changes to previously published timetables.
+- Avoid early or late sessions when these are designated as preferences rather than mandatory rules.
+
+Use weighted optimization objectives and configurable priorities.
+
+Never weaken a hard constraint merely to improve a soft constraint.
+
+C. SOLVER BEHAVIOUR
+
+The scheduling engine must:
+
+1. Read and validate all required university data.
+2. Detect impossible or contradictory scheduling requirements.
+3. Generate candidate time slots and eligible rooms.
+4. Create optimization variables.
+5. Apply all hard constraints.
+6. Define and optimize soft constraints.
+7. Run the CP-SAT solver with configurable time limits.
+8. Return the best valid solution found.
+9. Distinguish between optimal, feasible, infeasible, and unknown solver outcomes.
+10. Save the generated timetable only after validating the solution.
+11. Explain why a timetable could not be generated when the constraints are infeasible.
+12. Preserve the previously published timetable if a new generation attempt fails.
+
+Do not report an optimal solution unless the solver proves optimality.
+
+When the solver finds a feasible solution but cannot prove optimality, report that distinction clearly.
+
+Provide useful diagnostics identifying potential causes of infeasibility, such as insufficient rooms, unavailable lecturers, excessive course hours, or conflicting fixed sessions.
+
+==================================================
+
+6. # TIMETABLE GENERATION WORKFLOW
+
+Implement the following workflow:
+
+STEP 1: DATA PREPARATION Load courses, lecturers, student groups, rooms, availability records, academic periods, and scheduling rules.
+
+STEP 2: VALIDATION Check that all courses have valid lecturer assignments, required durations, student groups, and suitable rooms.
+
+STEP 3: CONFLICT ANALYSIS Identify missing data, impossible assignments, overloaded resources, and obvious conflicts before invoking the solver.
+
+STEP 4: GENERATION Run the optimization algorithm to construct a timetable.
+
+STEP 5: VALIDATION Independently verify that the generated timetable satisfies every hard constraint.
+
+STEP 6: PREVIEW Display the proposed timetable before publication.
+
+STEP 7: ADMINISTRATOR REVIEW Allow authorized administrators to inspect and make changes.
+
+STEP 8: REVALIDATION Recheck all constraints after manual modifications.
+
+STEP 9: PUBLICATION Allow an administrator to publish an approved timetable.
+
+STEP 10: VERSIONING Maintain timetable versions and record when changes were made and by whom.
+
+STEP 11: NOTIFICATIONS Notify affected lecturers and students when published timetables change.
+
+Provide clear status messages throughout this workflow.
+
+==================================================
+
+7. # TIMETABLE DASHBOARD AND USER INTERFACE
+
+Build a modern, professional, responsive dashboard suitable for an actual university.
+
+Use a clean university management design with:
+
+- Sidebar navigation.
+- Top navigation bar.
+- Dashboard summary cards.
+- Search and filtering controls.
+- Responsive data tables.
+- Interactive timetable grids.
+- Modal forms.
+- Confirmation dialogs.
+- Success and error notifications.
+- Loading indicators during timetable generation.
+- Pagination for large datasets.
+- Accessible colour contrast.
+- Mobile-friendly layouts.
+
+The dashboard should display:
+
+- Total courses.
+- Total lecturers.
+- Total classrooms.
+- Total student groups.
+- Scheduled sessions.
+- Unscheduled sessions.
+- Room utilization.
+- Lecturer workload distribution.
+- Timetable generation status.
+- Number of detected scheduling problems.
+
+Provide a prominent "Generate Intelligent Timetable" button.
+
+When clicked, the application must call the actual scheduling engine, display progress or a loading state, and present the resulting timetable and any relevant diagnostics.
+
+Do not create buttons that appear functional but have no backend implementation.
+
+==================================================
+
+8. # TIMETABLE VIEWS
+
+Implement the following timetable views:
+
+1. University-wide timetable.
+2. Faculty timetable.
+3. Department timetable.
+4. Programme timetable.
+5. Student-group timetable.
+6. Lecturer timetable.
+7. Classroom timetable.
+8. Laboratory timetable.
+9. Daily timetable.
+10. Weekly timetable.
+
+Each view must support appropriate filters for academic year, semester, department, programme, lecturer, course, room, and student group.
+
+Use a clear timetable grid with days on one axis and time slots on the other.
+
+Display course code, course name, lecturer, room, and session type.
+
+Use consistent colours for different courses or session types.
+
+Allow users to switch between daily and weekly views and print or export the selected timetable.
+
+==================================================
+
+9. # MANUAL TIMETABLE EDITING
+
+Allow authorized administrators to:
+
+- Move a class to another time slot.
+- Change the allocated classroom.
+- Reassign an eligible lecturer.
+- Lock a session in its current position.
+- Unlock previously fixed sessions.
+- Regenerate only affected parts of the timetable where practical.
+- Compare different timetable versions.
+
+Before accepting an edit, validate all hard constraints.
+
+If an edit causes a conflict, reject it and explain exactly which constraint was violated.
+
+Never allow manual edits to bypass the scheduling validation rules.
+
+Record administrative changes in an audit log.
+
+==================================================
+
+10. # DATABASE DESIGN
+
+Design a normalized relational database using Flask-SQLAlchemy.
+
+Create appropriate models for:
+
+- User.
+- Faculty.
+- Department.
+- Programme.
+- AcademicYear.
+- Semester.
+- Course.
+- Lecturer.
+- Student.
+- StudentGroup.
+- Classroom.
+- CourseOffering.
+- CourseRegistration.
+- LecturerAssignment.
+- LecturerAvailability.
+- RoomAvailability.
+- TimeSlot.
+- SchedulingConstraint.
+- Timetable.
+- TimetableEntry.
+- TimetableVersion.
+- AuditLog.
+- Notification.
+
+Use appropriate foreign keys, relationships, unique constraints, indexes, and database-level integrity rules.
+
+Support database migrations.
+
+Store session start and end times consistently, and model overlapping intervals correctly.
+
+Do not store the entire timetable as an unstructured text field.
+
+Use separate timetable-entry records linked to the relevant course, lecturer, group, room, and timetable version.
+
+==================================================
+
+11. # REPORTS AND EXPORTS
+
+Implement PDF and Excel exports for:
+
+- Lecturer timetables.
+- Student-group timetables.
+- Programme timetables.
+- Department timetables.
+- Classroom timetables.
+- University-wide timetables.
+- Lecturer workload reports.
+- Classroom utilization reports.
+- Scheduling conflict reports.
+- Unscheduled course reports.
+
+Provide print-friendly pages.
+
+Exports must reflect the selected filters and published timetable version.
+
+==================================================
+
+12. # SECURITY AND RELIABILITY
+
+Implement:
+
+- Secure password hashing.
+- Role-based authorization.
+- CSRF protection.
+- Input validation.
+- SQL injection protection through ORM usage.
+- Secure session configuration.
+- Environment-based secret keys.
+- Appropriate production configuration.
+- Audit logging.
+- Database transactions.
+- Safe error handling.
+- Backup and restore guidance.
+- Protection against unauthorized timetable modifications.
+
+Do not commit passwords, secret keys, or other credentials to source control.
+
+Do not expose sensitive information in error messages.
+
+==================================================
+
+13. # SAMPLE DATA
+
+Create a database initialization command that loads realistic sample data for a fictional university.
+
+Include:
+
+- At least three faculties.
+- Several departments.
+- Multiple academic programmes.
+- Multiple year groups.
+- At least 15 courses.
+- At least 10 lecturers.
+- At least 12 classrooms and laboratories.
+- Different room capacities.
+- Lecture and practical sessions.
+- Different lecturer availability patterns.
+- Multiple student groups.
+- Some preferred time slots.
+- At least one fixed session.
+
+Ensure the sample dataset is internally consistent enough to demonstrate successful timetable generation.
+
+Include a separate test dataset with deliberately conflicting constraints to demonstrate how the system detects infeasibility.
+
+Never use real people's personal information in sample data.
+
+==================================================
+
+14. # PROJECT STRUCTURE
+
+Organize the project using a maintainable structure similar to:
+
+university\_timetable/ app/ **init**.py extensions.py models/ **init**.py user.py university.py timetable.py routes/ **init**.py auth.py admin.py lecturers.py students.py timetables.py reports.py services/ **init**.py timetable\_service.py validation\_service.py notification\_service.py scheduler/ **init**.py solver.py constraints.py objectives.py diagnostics.py templates/ base.html login.html dashboard.html courses.html lecturers.html classrooms.html student\_groups.html timetable.html timetable\_preview.html reports.html static/ css/ js/ images/ tests/ test\_auth.py test\_database.py test\_scheduler.py test\_constraints.py test\_timetable\_routes.py migrations/ instance/ scripts/ init\_db.py seed\_data.py config.py requirements.txt .env.example .gitignore README.md run.py
+
+You may adjust this structure when necessary, but keep scheduling logic, database models, routes, and frontend code separate.
+
+==================================================
+
+15. # TESTING AND QUALITY ASSURANCE
+
+Write automated tests for:
+
+- Authentication and authorization.
+- Database relationships.
+- Course and lecturer validation.
+- Lecturer conflict prevention.
+- Classroom conflict prevention.
+- Student-group conflict prevention.
+- Room capacity restrictions.
+- Lecturer availability.
+- Room type requirements.
+- Course contact-hour requirements.
+- Session duration.
+- Fixed sessions.
+- Manual timetable edits.
+- Infeasible scheduling problems.
+- Timetable versioning.
+- Export functionality.
+- Preservation of the previous published timetable after generation failure.
+
+Add an independent timetable validator that checks the solution separately from the solver model.
+
+Run the test suite and fix identified errors before declaring the application complete.
+
+Do not claim that tests passed unless they were actually executed.
+
+==================================================
+
+16. # PERFORMANCE AND SCALABILITY
+
+Design the system to support increasing numbers of courses, lecturers, student groups, rooms, and scheduling constraints.
+
+Avoid unnecessary database queries.
+
+Add indexes for frequently filtered fields.
+
+Use configurable solver time limits.
+
+Provide meaningful progress or status information during lengthy optimization.
+
+Use background processing if scheduling becomes too expensive for a normal web request.
+
+Do not promise that every scheduling problem can be solved instantly or that an optimal timetable always exists.
+
+==================================================
+
+17. # INSTALLATION AND EXECUTION
+
+Create a complete README.md containing:
+
+- Prerequisites.
+- Installation instructions for Windows.
+- Installation instructions for Linux and macOS.
+- Virtual environment setup.
+- Dependency installation.
+- Environment variable configuration.
+- Database initialization.
+- Sample data loading.
+- Application startup.
+- Test execution.
+- Timetable generation instructions.
+- Troubleshooting.
+- Production deployment guidance.
+
+Include the exact commands required to install dependencies, initialize the database, seed sample data, run tests, and start the application.
+
+Provide a requirements.txt containing all necessary dependencies.
+
+Ensure the application can run locally after following the documented steps.
+
+==================================================
+
+18. # DEVELOPMENT RULES
+
+Follow these rules throughout implementation:
+
+1. Generate complete code rather than pseudocode.
+2. Do not leave core functions as TODO comments.
+3. Do not use fake timetable generation or hard-coded timetable results.
+4. Do not create nonfunctional buttons or placeholder API endpoints.
+5. Use real database operations.
+6. Use the actual OR-Tools solver.
+7. Keep hard constraints separate from soft constraints.
+8. Validate all generated and manually modified timetables.
+9. Explain important architecture and scheduling decisions.
+10. Handle empty datasets and invalid input gracefully.
+11. Avoid unnecessary complexity and duplicate code.
+12. Use readable naming conventions and type hints where appropriate.
+13. Ensure templates, routes, models, and JavaScript are integrated correctly.
+14. Provide useful error messages without exposing secrets.
+15. Preserve previously published timetable data when generation fails.
+16. Use transactions for important database changes.
+17. Verify all critical imports, dependencies, and routes.
+18. Do not claim that a feature is complete unless it is implemented.
+19. Do not claim that the system works unless the relevant tests or checks have actually been performed.
+20. If a requirement is ambiguous, state the assumption and make it configurable where practical.
+
+==================================================
+
+19. # IMPLEMENTATION PLAN
+
+Develop the system in the following order:
+
+PHASE 1: Project setup and dependency configuration.
+
+PHASE 2: Database schema, models, and migrations.
+
+PHASE 3: Authentication and role-based permissions.
+
+PHASE 4: University data management.
+
+PHASE 5: Timetable validation and conflict detection.
+
+PHASE 6: OR-Tools intelligent scheduling engine.
+
+PHASE 7: Timetable preview, editing, and publication.
+
+PHASE 8: Dashboard and responsive frontend.
+
+PHASE 9: Reports, PDF exports, and Excel exports.
+
+PHASE 10: Testing, sample data, documentation, and deployment preparation.
+
+At the end of each phase:
+
+- List the files created or changed.
+- Explain the important implementation decisions.
+- Run the relevant tests when execution tools are available.
+- Fix errors before proceeding.
+- Identify any remaining limitations.
+
+==================================================
+
+20. # YOUR FIRST RESPONSE AND WORKING METHOD
+
+Begin by presenting a concise architecture overview and the final project directory structure.
+
+Then implement the project in working phases.
+
+If you have access to the development environment and file-editing tools, create the files directly, install dependencies when permitted, run the application, execute tests, and fix errors.
+
+If you are operating in a chat-only environment, provide the complete contents of each required file in manageable stages, together with the exact commands needed to create and run the project.
+
+Do not merely describe how the system could be built. Implement the actual application.
+
+Start with Phase 1 and continue systematically until all essential features are implemented and verified.
+
+The final deliverable must be a working, testable university intelligent timetable scheduling system with a genuine optimization engine, database persistence, a usable dashboard, and clear installation instructions.
+
+## How to Use This Prompt
+
+For the best results, follow these steps:
+
+1. **Open your AI coding tool.** You can use [Cursor](<https://cursor.com/?utm_source=chatgpt.com>), [Visual Studio Code](<https://code.visualstudio.com/?utm_source=chatgpt.com>) with a suitable coding assistant, or another tool that can create and edit project files.
+2. **Create a project folder** named `university_timetable`.
+3. **Paste the entire prompt** into your AI coding assistant.
+4. **Allow it to build the system in phases.** If it stops after completing a phase, instruct it to continue from the last completed phase without replacing working code unnecessarily.
+5. **Run the application and tests.** Confirm that the scheduling engine actually generates timetables and prevents conflicts.
+
+### Important Recommendation
+
+The most important feature is the **OR-Tools optimization engine**, not just the dashboard.
+
+For example, if 200 courses must be allocated across 30 lecturers, 25 classrooms, and five working days, the system must consider competing requirements and determine a feasible arrangement. It must also identify when the constraints make a valid timetable impossible.
+
+A successful timetable must be validated against the actual university rules before it can be published.
+
+**One final tip:** If this is for your university final-year project, ask your AI coding assistant to include a system architecture diagram, database ER diagram, use-case diagram, activity diagram, and project documentation. These will help you explain and demonstrate the system during your project presentation.
