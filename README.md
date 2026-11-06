@@ -1,4 +1,4 @@
-# Chalimbana University (CHAU) — Intelligent Timetable Scheduling System
+University Intelligent Timetable and Scheduling System
 
 An enterprise-grade, mathematical constraint-optimized academic timetable scheduling and examination planning platform engineered for higher education institutions.
 
