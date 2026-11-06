@@ -8,7 +8,6 @@ import {
 import {
   DAYS_OF_WEEK,
   TIME_SLOTS,
-  LUNCH_SLOT_INDEX,
   ROOM_TYPE_BADGES,
   getCourseColor
 } from '../data/constants';
@@ -377,19 +376,17 @@ export const TimetableGrid: React.FC = () => {
             {/* Header: Time Slots */}
             <thead>
               <tr className="bg-slate-900 text-white divide-x divide-slate-800 text-xs">
-                <th className="py-3 px-3 font-bold w-28 uppercase tracking-wider text-slate-300 sticky left-0 bg-slate-900 z-10">
-                  Day / Period
+                <th className="py-3 px-3 font-bold w-28 uppercase tracking-wider text-slate-300 sticky left-0 bg-slate-900 z-10 text-center">
+                  Day
                 </th>
                 {TIME_SLOTS.map((slot) => (
                   <th
                     key={slot.slotIndex}
-                    className={`py-2 px-2 text-center font-semibold ${
-                      slot.isLunchBreak ? 'bg-slate-800 text-amber-300' : ''
-                    }`}
+                    className="py-2.5 px-2 text-center font-semibold bg-slate-900 text-slate-200"
                   >
-                    <div className="text-[11px] font-bold">{slot.timeLabel}</div>
+                    <div className="text-[11px] font-bold text-white">{slot.timeLabel}</div>
                     <div className="text-[10px] text-slate-400 font-normal">
-                      {slot.isLunchBreak ? 'Lunch Break' : `Slot ${slot.slotIndex + 1}`}
+                      Slot {slot.slotIndex + 1}
                     </div>
                   </th>
                 ))}
@@ -402,9 +399,8 @@ export const TimetableGrid: React.FC = () => {
                 return (
                   <tr key={day} className="divide-x divide-slate-200 hover:bg-slate-50/50">
                     {/* Day Column Header */}
-                    <td className="py-3 px-3 font-bold text-slate-800 bg-slate-100/80 sticky left-0 z-10 flex flex-col justify-center">
+                    <td className="py-3 px-3 font-bold text-slate-800 bg-slate-100/80 sticky left-0 z-10 text-center align-middle">
                       <span className="text-sm font-bold text-slate-900">{day}</span>
-                      <span className="text-[10px] text-slate-500 font-medium">08:00 - 17:00</span>
                     </td>
 
                     {/* Time Slot Columns */}
@@ -414,20 +410,11 @@ export const TimetableGrid: React.FC = () => {
                         (e) => e.day === day && e.startSlotIndex === slot.slotIndex
                       );
 
-                      const isLunch = slot.slotIndex === LUNCH_SLOT_INDEX;
-
                       return (
                         <td
                           key={slot.slotIndex}
-                          className={`p-1.5 align-top min-w-[125px] h-28 relative ${
-                            isLunch ? 'bg-slate-50/80' : 'bg-white'
-                          }`}
+                          className="p-1.5 align-top min-w-[120px] h-28 relative bg-white hover:bg-slate-50/60 transition-colors"
                         >
-                          {isLunch && startingSessions.length === 0 && (
-                            <div className="h-full flex items-center justify-center text-[10px] font-semibold text-slate-400 italic">
-                              Lunch Hour
-                            </div>
-                          )}
 
                           <div className="space-y-1.5 h-full">
                             {startingSessions.map((session) => {

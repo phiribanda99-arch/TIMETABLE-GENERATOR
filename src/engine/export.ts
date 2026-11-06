@@ -104,7 +104,7 @@ export function exportTimetableToExcel(
   const roomRows = rooms.map((rm) => {
     const rmEntries = timetable.entries.filter((e) => e.roomId === rm.id);
     const bookedHours = rmEntries.reduce((sum, e) => sum + e.durationSlots, 0);
-    const totalCapHours = 45; // 5 days * 9 slots
+    const totalCapHours = DAYS_OF_WEEK.length * TIME_SLOTS.length; // 5 days * 11 slots (07:00 - 18:00) = 55 hrs
     return {
       'Room Code': rm.code,
       'Room Name': rm.name,

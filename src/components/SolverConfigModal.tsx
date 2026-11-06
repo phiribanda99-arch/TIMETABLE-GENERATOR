@@ -51,32 +51,10 @@ export const SolverConfigModal: React.FC<SolverConfigModalProps> = ({ onClose })
             <label className="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
               <div>
                 <span className="text-xs font-semibold text-slate-800 block">
-                  Preserve University Lunch Break
-                </span>
-                <span className="text-[11px] text-slate-500">
-                  Strictly forbid classes during 12:00 - 13:00
-                </span>
-              </div>
-              <input
-                type="checkbox"
-                checked={solverConfig.avoidLunchBreak}
-                onChange={(e) =>
-                  setSolverConfig((prev) => ({
-                    ...prev,
-                    avoidLunchBreak: e.target.checked,
-                  }))
-                }
-                className="w-4 h-4 text-indigo-600 rounded-sm focus:ring-indigo-500"
-              />
-            </label>
-
-            <label className="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <div>
-                <span className="text-xs font-semibold text-slate-800 block">
                   Morning Core Lecture Priority
                 </span>
                 <span className="text-[11px] text-slate-500">
-                  Favor 08:00 - 12:00 slots for high-cognition theoretical subjects
+                  Favor 07:00 - 12:00 morning slots for core theoretical subjects
                 </span>
               </div>
               <input

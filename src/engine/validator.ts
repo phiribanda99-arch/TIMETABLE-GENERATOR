@@ -75,29 +75,8 @@ export function validateTimetable(
         entityId: entry.roomId,
         day: entry.day,
         slotIndex: entry.startSlotIndex,
-        suggestedAction: 'Move to earlier slot during 08:00 - 17:00.',
+        suggestedAction: 'Move to earlier slot during 07:00 - 18:00.',
       });
-    }
-
-    // B. Lunch break check (Slot 4: 12:00 - 13:00)
-    if (options.enforceLunchBreak) {
-      for (let s = 0; s < entry.durationSlots; s++) {
-        const currentSlot = entry.startSlotIndex + s;
-        if (currentSlot === 4) {
-          diagnostics.push({
-            id: `warn-lunch-${entry.id}`,
-            severity: 'SOFT_WARNING',
-            ruleCode: 'LUNCH_BREAK_INTERRUPTION',
-            title: 'Session Overlaps Lunch Break',
-            description: `${course.code} is scheduled across the 12:00-13:00 university lunch hour on ${entry.day}.`,
-            entityType: 'GROUP',
-            entityId: entry.studentGroupId,
-            day: entry.day,
-            slotIndex: 4,
-            suggestedAction: 'Consider scheduling in morning (08:00-12:00) or afternoon (13:00-17:00).',
-          });
-        }
-      }
     }
 
     // C. Room capacity check

@@ -10,12 +10,12 @@ import {
   SchedulingDiagnostic,
   DayOfWeek
 } from '../types';
-import { DAYS_OF_WEEK, TIME_SLOTS, TOTAL_SLOTS_PER_DAY, LUNCH_SLOT_INDEX } from '../data/constants';
+import { DAYS_OF_WEEK, TIME_SLOTS, TOTAL_SLOTS_PER_DAY } from '../data/constants';
 import { validateTimetable } from './validator';
 
 export interface SolverConfig {
   maxTimeMs: number;
-  avoidLunchBreak: boolean;
+  avoidLunchBreak?: boolean;
   morningLecturePriority: boolean;
   maxConsecutiveHours: number;
   minimizeGapsWeight: number;
@@ -24,7 +24,7 @@ export interface SolverConfig {
 
 export const DEFAULT_SOLVER_CONFIG: SolverConfig = {
   maxTimeMs: 4000,
-  avoidLunchBreak: true,
+  avoidLunchBreak: false,
   morningLecturePriority: true,
   maxConsecutiveHours: 3,
   minimizeGapsWeight: 10,
@@ -344,11 +344,6 @@ export function generateOptimizedTimetable(
       const currentSlot = startSlot + s;
       const slotKey = `${day}-${currentSlot}`;
 
-      // Check lunch break
-      if (config.avoidLunchBreak && currentSlot === LUNCH_SLOT_INDEX) {
-        return false;
-      }
-
       // Check lecturer availability
       if (lec?.unavailableSlots.includes(slotKey)) {
         return false;
@@ -491,16 +486,6 @@ export function generateOptimizedTimetable(
 
     for (const day of dayOrder) {
       for (let slot = 0; slot <= TOTAL_SLOTS_PER_DAY - session.durationSlots; slot++) {
-        // Skip lunch slot if configured
-        if (config.avoidLunchBreak && slot === LUNCH_SLOT_INDEX) continue;
-        if (
-          config.avoidLunchBreak &&
-          session.durationSlots === 2 &&
-          slot + 1 === LUNCH_SLOT_INDEX
-        ) {
-          continue;
-        }
-
         for (const room of compRooms) {
           if (
             isSlotRangeFree(
@@ -565,7 +550,7 @@ export function generateOptimizedTimetable(
 
   // Perform independent validation on the solution
   const validation = validateTimetable(entries, courses, lecturers, rooms, groups, {
-    enforceLunchBreak: config.avoidLunchBreak,
+    enforceLunchBreak: false,
   });
 
   const scheduledCount = entries.length;

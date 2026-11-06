@@ -159,7 +159,7 @@ export const ManualMoveModal: React.FC<ManualMoveModalProps> = ({ entry, onClose
                 {TIME_SLOTS.filter((s) => s.slotIndex + entry.durationSlots <= TIME_SLOTS.length).map(
                   (s) => (
                     <option key={s.slotIndex} value={s.slotIndex}>
-                      {s.timeLabel} {s.isLunchBreak ? '(Lunch Hour Break)' : ''}
+                      {s.timeLabel}
                     </option>
                   )
                 )}

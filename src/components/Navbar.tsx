@@ -10,7 +10,8 @@ import {
   RefreshCw,
   Sliders,
   CheckCircle2,
-  FileSpreadsheet
+  FileSpreadsheet,
+  LogOut
 } from 'lucide-react';
 import { Role } from '../types';
 
@@ -29,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConfig }) => {
     publishTimetableAction,
     loadInfeasibleScenario,
     resetToDefaultData,
+    logout,
   } = useApp();
 
   const handleRoleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -65,8 +67,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConfig }) => {
             />
             <div className="flex flex-col justify-center">
               <div className="flex items-center space-x-2">
-                <span className="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 leading-none">
-                  CHALIMBANA UNIVERSITY
+                <span className="text-sm sm:text-base font-black tracking-tight text-[#0b1d3d] leading-none uppercase">
+                  UNIVERSITY INTELLIGENT
                 </span>
                 <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200">
                   UniSchedule AI
@@ -158,6 +160,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConfig }) => {
                 ))}
               </select>
             </div>
+
+            {/* Sign Out Button */}
+            <button
+              type="button"
+              onClick={logout}
+              title="Sign Out to Login Screen"
+              className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl transition-all cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5 text-rose-600" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
           </div>
         </div>
       </div>

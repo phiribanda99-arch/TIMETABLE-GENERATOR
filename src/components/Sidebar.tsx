@@ -13,7 +13,8 @@ import {
   History,
   FileText,
   RefreshCcw,
-  GraduationCap
+  GraduationCap,
+  LogOut
 } from 'lucide-react';
 
 export type NavTab =
@@ -34,7 +35,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
-  const { currentUser, currentTimetable, resetToDefaultData } = useApp();
+  const { currentUser, currentTimetable, resetToDefaultData, logout } = useApp();
 
   const isStudent = currentUser.role === 'STUDENT';
   const isLecturer = currentUser.role === 'LECTURER';
@@ -115,9 +116,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0 no-print">
       {/* User profile card */}
-      <div className="p-4 border-b border-slate-800">
-        <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-inner">
+      <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+        <div className="flex items-center space-x-3 overflow-hidden">
+          <div className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-inner shrink-0">
             {currentUser.name
               .split(' ')
               .map((n) => n[0])
@@ -129,6 +130,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
             <p className="text-xs text-indigo-400 truncate">{currentUser.title || currentUser.role}</p>
           </div>
         </div>
+        <button
+          type="button"
+          onClick={logout}
+          title="Sign out to Login"
+          className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer shrink-0 ml-2"
+        >
+          <LogOut className="w-4 h-4" />
+        </button>
       </div>
 
       {/* Navigation Links */}

@@ -13,6 +13,7 @@ import { ConflictsView } from './views/ConflictsView';
 import { AuditLogsView } from './views/AuditLogsView';
 import { ExamDietView } from './views/ExamDietView';
 import { SolverConfigModal } from './components/SolverConfigModal';
+import { LoginView } from './views/LoginView';
 
 const MainLayout: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
@@ -63,10 +64,20 @@ const MainLayout: React.FC = () => {
   );
 };
 
+const AppContent: React.FC = () => {
+  const { isAuthenticated } = useApp();
+
+  if (!isAuthenticated) {
+    return <LoginView />;
+  }
+
+  return <MainLayout />;
+};
+
 export default function App() {
   return (
     <AppProvider>
-      <MainLayout />
+      <AppContent />
     </AppProvider>
   );
 }

@@ -32,6 +32,9 @@ interface AppContextType {
   currentUser: User;
   setCurrentUser: (user: User) => void;
   availableUsers: User[];
+  isAuthenticated: boolean;
+  login: (user: User) => void;
+  logout: () => void;
 
   faculties: Faculty[];
   departments: Department[];
@@ -80,6 +83,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentUser, setCurrentUser] = useState<User>(() => {
     const saved = localStorage.getItem('chau_current_user');
     return saved ? JSON.parse(saved) : SEED_USERS[0];
+  });
+
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    const authSaved = localStorage.getItem('chau_authenticated');
+    return authSaved === 'true';
   });
 
   const [faculties, setFaculties] = useState<Faculty[]>(() => {
@@ -144,10 +152,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [timetableVersions, setTimetableVersions] = useState<TimetableVersion[]>(() => {
-    const s = localStorage.getItem('chau_timetable_versions');
+    const s = localStorage.getItem('chau_timetable_versions_v3');
     if (s) return JSON.parse(s);
 
-    // Initial baseline solve on startup
+    // Initial baseline solve on startup across 07:00 - 18:00
     const initialRun = generateOptimizedTimetable(
       SEED_COURSES.slice(0, 14),
       SEED_LECTURERS,
@@ -159,7 +167,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const initialVersion: TimetableVersion = {
       id: 'tt-v101',
-      name: '2026/2027 Semester 1 - Master Baseline',
+      name: '2026/2027 Semester 1 - Master Baseline (07:00-18:00)',
       academicYear: '2026/2027',
       semester: 1,
       status: 'PUBLISHED',
@@ -199,7 +207,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [lecturers]);
 
   useEffect(() => {
-    localStorage.setItem('chau_timetable_versions', JSON.stringify(timetableVersions));
+    localStorage.setItem('chau_timetable_versions_v3', JSON.stringify(timetableVersions));
   }, [timetableVersions]);
 
   useEffect(() => {
@@ -508,12 +516,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     addAuditLog('LECTURER_DELETED', `Lecturer ID ${id} removed.`);
   };
 
+  const login = (user: User) => {
+    setCurrentUser(user);
+    setIsAuthenticated(true);
+    localStorage.setItem('chau_authenticated', 'true');
+    localStorage.setItem('chau_current_user', JSON.stringify(user));
+    addAuditLog('USER_LOGIN', `${user.name} logged in successfully as ${user.role}.`);
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    localStorage.setItem('chau_authenticated', 'false');
+    addAuditLog('USER_LOGOUT', `${currentUser.name} signed out.`);
+  };
+
   return (
     <AppContext.Provider
       value={{
         currentUser,
         setCurrentUser,
         availableUsers: SEED_USERS,
+        isAuthenticated,
+        login,
+        logout,
         faculties,
         departments,
         programmes,

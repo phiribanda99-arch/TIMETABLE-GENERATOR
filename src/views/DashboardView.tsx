@@ -61,8 +61,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigate }) => {
             <span>Intelligent Constraint Satisfaction Engine (CP-SAT)</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-            Chalimbana University Timetable Portal
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-white leading-tight drop-shadow-xs">
+            University Intelligent Timetable Scheduling System
           </h1>
 
           <p className="text-sm text-slate-300 leading-relaxed">

@@ -190,3 +190,32 @@ test('Solver preserves fixed/locked sessions at designated position', () => {
   assert.equal(scheduled.roomId, 'rm-mlt');
   assert.equal(scheduled.isLocked, true);
 });
+
+test('Courses can start at 12:00 (slot 5) without lunch conflict warnings', () => {
+  const atTwelveEntry = {
+    id: 'noon-session-1',
+    sessionId: 'sess-noon-1',
+    courseId: 'crs-cs101',
+    lecturerId: 'lec-banda',
+    studentGroupId: 'grp-cs1',
+    roomId: 'rm-slh1',
+    day: 'Thursday' as const,
+    startSlotIndex: 5, // 12:00 - 13:00 slot
+    durationSlots: 1,
+    isLocked: true,
+    sessionType: 'LECTURE' as const,
+  };
+
+  const validation = validateTimetable(
+    [atTwelveEntry],
+    SEED_COURSES,
+    SEED_LECTURERS,
+    SEED_ROOMS,
+    SEED_STUDENT_GROUPS
+  );
+
+  assert.equal(validation.isValid, true, 'Schedule with 12:00 session must be valid');
+  assert.equal(validation.hardConflictsCount, 0, 'No hard conflicts for 12:00 slot');
+  const lunchWarnings = validation.diagnostics.filter((d) => d.ruleCode === 'LUNCH_BREAK_INTERRUPTION');
+  assert.equal(lunchWarnings.length, 0, 'No lunch break interruption warnings must exist');
+});

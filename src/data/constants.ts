@@ -9,19 +9,20 @@ export const DAYS_OF_WEEK: DayOfWeek[] = [
 ];
 
 export const TIME_SLOTS: TimeSlotDef[] = [
-  { slotIndex: 0, timeLabel: '08:00 - 09:00', startTime: '08:00', endTime: '09:00' },
-  { slotIndex: 1, timeLabel: '09:00 - 10:00', startTime: '09:00', endTime: '10:00' },
-  { slotIndex: 2, timeLabel: '10:00 - 11:00', startTime: '10:00', endTime: '11:00' },
-  { slotIndex: 3, timeLabel: '11:00 - 12:00', startTime: '11:00', endTime: '12:00' },
-  { slotIndex: 4, timeLabel: '12:00 - 13:00', startTime: '12:00', endTime: '13:00', isLunchBreak: true },
-  { slotIndex: 5, timeLabel: '13:00 - 14:00', startTime: '13:00', endTime: '14:00' },
-  { slotIndex: 6, timeLabel: '14:00 - 15:00', startTime: '14:00', endTime: '15:00' },
-  { slotIndex: 7, timeLabel: '15:00 - 16:00', startTime: '15:00', endTime: '16:00' },
-  { slotIndex: 8, timeLabel: '16:00 - 17:00', startTime: '16:00', endTime: '17:00' },
+  { slotIndex: 0, timeLabel: '07:00 - 08:00', startTime: '07:00', endTime: '08:00' },
+  { slotIndex: 1, timeLabel: '08:00 - 09:00', startTime: '08:00', endTime: '09:00' },
+  { slotIndex: 2, timeLabel: '09:00 - 10:00', startTime: '09:00', endTime: '10:00' },
+  { slotIndex: 3, timeLabel: '10:00 - 11:00', startTime: '10:00', endTime: '11:00' },
+  { slotIndex: 4, timeLabel: '11:00 - 12:00', startTime: '11:00', endTime: '12:00' },
+  { slotIndex: 5, timeLabel: '12:00 - 13:00', startTime: '12:00', endTime: '13:00' },
+  { slotIndex: 6, timeLabel: '13:00 - 14:00', startTime: '13:00', endTime: '14:00' },
+  { slotIndex: 7, timeLabel: '14:00 - 15:00', startTime: '14:00', endTime: '15:00' },
+  { slotIndex: 8, timeLabel: '15:00 - 16:00', startTime: '15:00', endTime: '16:00' },
+  { slotIndex: 9, timeLabel: '16:00 - 17:00', startTime: '16:00', endTime: '17:00' },
+  { slotIndex: 10, timeLabel: '17:00 - 18:00', startTime: '17:00', endTime: '18:00' },
 ];
 
-export const TOTAL_SLOTS_PER_DAY = TIME_SLOTS.length; // 9 slots
-export const LUNCH_SLOT_INDEX = 4; // 12:00 - 13:00 lunch
+export const TOTAL_SLOTS_PER_DAY = TIME_SLOTS.length; // 11 slots (07:00 - 18:00)
 
 export const ROOM_TYPE_LABELS: Record<string, string> = {
   LECTURE_HALL: 'Lecture Hall / Tiered Theatre',
