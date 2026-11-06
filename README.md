@@ -64,7 +64,7 @@ Powered by a CP-SAT constraint satisfaction engine, multi-role governance (Regis
 | **Academic Registrar (Admin)** | Mrs. Ruth Kalumba | `CHAU-ADM-001` | `ChauPass2026!` |
 | **Head of Department (HOD)** | Dr. Chanda Mutale | `CHAU-HOD-CS01` | `ChauPass2026!` |
 | **Lecturer (Computing)** | Mr. Peter Banda | `CHAU-LEC-204` | `ChauPass2026!` |
-| **Student (BSc CS Year 2)** | Mwaka Phiri | `202408912` | `ChauPass2026!` |
+| **Student (BSc CS Year 2)** | Mwaka Phiri | `234033342` | `234033342!` |
 
 Use the user profile selector in the top navigation bar to switch between roles instantly.
 
